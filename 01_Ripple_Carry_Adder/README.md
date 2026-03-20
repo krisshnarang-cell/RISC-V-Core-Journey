@@ -15,6 +15,3 @@ This project implements a 4-bit Ripple Carry Adder using **Structural Modeling**
 - **Propagation Delay**: Demonstrates that the most significant bit (MSB) must wait for the carry to "ripple" through all previous stages.
 - **Structural Verilog**: Focuses on "how the wires are connected" rather than just "what the math is."
 
-## How to Run
-1. Source files are located in `src/`.
-2. Run the testbench `sim/tb_rca.v` using any Verilog simulator (Vivado/Icarus).
