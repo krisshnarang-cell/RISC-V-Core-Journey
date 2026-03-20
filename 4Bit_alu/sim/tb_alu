@@ -1,0 +1,56 @@
+// -----------------------------------------------------------------------------
+// Module: tb_alu
+// Description: Testbench to verify the 4-bit ALU's Arithmetic and Logic 
+//              operations (ADD, SUB, AND, OR).
+// -----------------------------------------------------------------------------
+module tb_alu();
+
+    // 1. Internal Signals (Reg for inputs, Wire for outputs)
+    reg  [3:0] A;
+    reg  [3:0] B;
+    reg  [1:0] opcode;
+    wire [3:0] result;
+
+    // 2. Instantiate the Device Under Test (DUT)
+    // Using Named Port Mapping for professional reliability
+    alu dut (
+        .A(A),
+        .B(B),
+        .opcode(opcode),
+        .result(result)
+    );
+
+    // 3. Stimulus Block
+    initial begin
+        // Display header for simulation output
+        $display("Time | A    | B    | Op | Result | Operation");
+        $display("--------------------------------------------");
+        
+        // Setup monitor to track changes automatically
+        $monitor("%4t | %b | %b | %b  | %b   | %s", 
+                 $time, A, B, opcode, result, 
+                 (opcode == 2'b00) ? "ADD" :
+                 (opcode == 2'b01) ? "SUB" :
+                 (opcode == 2'b10) ? "AND" : "OR ");
+
+        // --- Test Case 1: Addition ---
+        A = 4'b1010; B = 4'b0101; opcode = 2'b00; #10;
+        
+        // --- Test Case 2: Subtraction ---
+        A = 4'b1111; B = 4'b0001; opcode = 2'b01; #10;
+        
+        // --- Test Case 3: Bitwise AND ---
+        A = 4'b1100; B = 4'b1010; opcode = 2'b10; #10;
+        
+        // --- Test Case 4: Bitwise OR ---
+        A = 4'b1100; B = 4'b1010; opcode = 2'b11; #10;
+
+        // --- Test Case 5: Corner Case (Zero Result) ---
+        A = 4'b0101; B = 4'b0101; opcode = 2'b01; #10;
+
+        $display("--------------------------------------------");
+        $display("Simulation Finished Successfully.");
+        $finish; // Properly terminate the simulation
+    end
+
+endmodule
